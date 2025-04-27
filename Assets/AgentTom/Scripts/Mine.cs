@@ -8,6 +8,7 @@ public class Mine : MonoBehaviour
 	[SerializeField] private float _explosionRadius;
 	[SerializeField] private float _timeUntilExplosion;
 	[SerializeField] private int _damage;
+	[SerializeField] private ParticleSystem _mineExplosionEffect;
 
 	private bool _isDetonated;
 	private float _time;
@@ -36,6 +37,10 @@ public class Mine : MonoBehaviour
 
 	private void Explode()
 	{
+		_isDetonated = false;
+
+		ParticleSystem explosionEffect = Instantiate(_mineExplosionEffect, transform.position, Quaternion.identity);
+
 		Collider[] detectedColliders = Physics.OverlapSphere(transform.position, _explosionRadius);
 
 		foreach (Collider collider in detectedColliders)

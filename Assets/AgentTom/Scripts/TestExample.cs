@@ -47,9 +47,13 @@ public class TestExample : MonoBehaviour
 	{
 		_currentController.Update(Time.deltaTime);
 
-		if (_characterController.IsWorking)
-			if (_timer.CurrentTime >= _timeToChangeBehavoiur)
-				SwitchControllers();
+		if (_character.IsDead)
+			_currentController.Disable();
+
+		if (_character.IsDead == false)
+			if (_characterController.IsWorking)
+				if (_timer.CurrentTime >= _timeToChangeBehavoiur)
+					SwitchControllers();
 	}
 
 	private void OnDrawGizmos()

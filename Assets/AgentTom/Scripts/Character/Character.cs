@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
 public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHealable
 {

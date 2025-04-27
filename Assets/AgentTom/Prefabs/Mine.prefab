@@ -52,6 +52,8 @@ MonoBehaviour:
   _explosionRadius: 6
   _timeUntilExplosion: 3
   _damage: 30
+  _mineExplosionEffect: {fileID: 5675929623433671820, guid: cc1a3e16ef9eafe4d91d9ea390066b38,
+    type: 3}
 --- !u!135 &7707324690290544987
 SphereCollider:
   m_ObjectHideFlags: 0
