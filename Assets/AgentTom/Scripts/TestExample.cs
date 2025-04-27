@@ -6,12 +6,12 @@ public class TestExample : MonoBehaviour
 	[SerializeField] private Character _character;
 	[SerializeField] private Pointer _pointerPrefab;
 
-	private Controller _characterController;	
+	private Controller _characterController;
 
 	private Camera _camera;
 
 	private void Awake()
-	{	
+	{
 		_camera = Camera.main;
 
 		NavMeshQueryFilter queryFilter = new NavMeshQueryFilter();
@@ -19,12 +19,11 @@ public class TestExample : MonoBehaviour
 		queryFilter.areaMask = NavMesh.AllAreas;
 
 		Pointer pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
-		//pointer.gameObject.SetActive(false);
 
-		_characterController = new CompositController(			
+		_characterController = new CompositController(
 			new PlayerMouseMovableController(_character, queryFilter, _camera, pointer),
 			new PlayerRotatableController(_character, _character));
-		
+
 		_characterController.Enable();
 	}
 
