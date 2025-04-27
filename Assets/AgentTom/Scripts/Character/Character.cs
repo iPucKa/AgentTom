@@ -11,8 +11,7 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 	[SerializeField] private float _moveSpeed;
 	[SerializeField] private float _rotationSpeed;
 	[SerializeField] private int _maxHealth;
-	[SerializeField] private ParticleSystem _damageEffectPrefab;
-	[SerializeField] private Image _filledImage;
+	[SerializeField] private CharacterView _characterView;
 
 	public Vector3 CurrentVelocity => _mover.CurrentVelocity;
 
@@ -30,7 +29,6 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 		_mover = new MouseMover(GetComponent<NavMeshAgent>(), _moveSpeed);
 		_rotator = new DirectionalRotator(transform, _rotationSpeed);
 		_health = new Health(_maxHealth);
-		_filledImage.fillAmount = (float)HealthValue /_maxHealth;
 	}
 
 	private void Update()
@@ -41,17 +39,18 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 
 	public void TakeDamage(int damage)
 	{
-		_damageEffectPrefab.Play();
+		_characterView.ShowDamageEffects();
+
 		_health.Reduce(damage);
 
-		_filledImage.fillAmount = (float)HealthValue / _maxHealth;
+		_characterView.ShowHealthPoints();
 	}
 
 	public void AddHealth(int health)
 	{
 		_health.Add(health);
 
-		_filledImage.fillAmount = (float)HealthValue / _maxHealth;
+		_characterView.ShowHealthPoints();
 	}
 
 	public void SetMovePosition(Vector3 position)

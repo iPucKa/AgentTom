@@ -20,10 +20,8 @@ public class Mine : MonoBehaviour
 		if (_isDetonated)
 			_time += Time.deltaTime;
 
-		if (_time >= _timeUntilExplosion)
-		{
-			Explode();
-		}
+		if (_time >= _timeUntilExplosion)		
+			Explode();		
 	}
 
 	private void OnTriggerEnter(Collider other)

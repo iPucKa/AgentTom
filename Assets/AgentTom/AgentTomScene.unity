@@ -7826,7 +7826,7 @@ Transform:
   m_GameObject: {fileID: 814333654}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2584644, y: -0.050552595, z: 0.01354553, w: 0.96460205}
-  m_LocalPosition: {x: -5.53, y: 2.39, z: -1.38}
+  m_LocalPosition: {x: 0.66, y: 2.39, z: 10.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12294,8 +12294,7 @@ MonoBehaviour:
   _moveSpeed: 7
   _rotationSpeed: 900
   _maxHealth: 100
-  _damageEffectPrefab: {fileID: 1579049942}
-  _filledImage: {fileID: 1702699022}
+  _characterView: {fileID: 2002815011}
 --- !u!195 &1195705878
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12353,7 +12352,7 @@ Transform:
   m_GameObject: {fileID: 1195705876}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.53, y: 0, z: -1.38}
+  m_LocalPosition: {x: 0.66, y: 0, z: 10.53}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -18458,7 +18457,7 @@ Transform:
   m_GameObject: {fileID: 1776808742}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2584644, y: -0.050552595, z: 0.01354553, w: 0.96460205}
-  m_LocalPosition: {x: -5.53, y: 2.39, z: -1.38}
+  m_LocalPosition: {x: 0.66, y: 2.39, z: 10.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20238,6 +20237,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 2002815012}
   _character: {fileID: 1195705877}
+  _damageEffectPrefab: {fileID: 1579049942}
+  _filledImage: {fileID: 1702699022}
 --- !u!95 &2002815012 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: b717baa0e8f5d5946a9e314d9d65bda7,

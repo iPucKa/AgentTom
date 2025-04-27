@@ -13,8 +13,6 @@ public class Pointer : MonoBehaviour
 		float distance = (transform.position - position).magnitude;
 
 		if (distance <= 0.1f)
-		{
 			gameObject.SetActive(false);
-		}
 	}
 }

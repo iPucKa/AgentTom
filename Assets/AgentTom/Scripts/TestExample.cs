@@ -8,29 +8,40 @@ public class TestExample : MonoBehaviour
 	[SerializeField] private LayerMask _layerMask;
 
 	private Controller _characterController;
+	private Controller _aIController;
+
+	private Controller _currentController;
+	private Pointer _pointer;
 
 	private Camera _camera;
+	private NavMeshQueryFilter _queryFilter = new NavMeshQueryFilter();
+
+	private const float _timeToChangeBehavoiur = 10f;
 
 	private void Awake()
 	{
 		_camera = Camera.main;
 
-		NavMeshQueryFilter queryFilter = new NavMeshQueryFilter();
-		queryFilter.agentTypeID = 0;
-		queryFilter.areaMask = NavMesh.AllAreas;
+		_queryFilter.agentTypeID = 0;
+		_queryFilter.areaMask = NavMesh.AllAreas;
 
-		Pointer pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
+		_pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
 
 		_characterController = new CompositController(
-			new PlayerMouseMovableController(_character, queryFilter, _camera, pointer, _layerMask),
+			new PlayerMouseMovableController(_character, _camera, _pointer, _queryFilter, _layerMask),
 			new PlayerRotatableController(_character, _character));
 
 		_characterController.Enable();
+		_currentController = _characterController;
 	}
 
 	private void Update()
 	{
-		_characterController.Update(Time.deltaTime);
+		_currentController.Update(Time.deltaTime);
+
+		if (_characterController.IsWorking)
+			if (_characterController.IdleTime >= _timeToChangeBehavoiur)
+				SwitchControllers();
 	}
 
 	private void OnDrawGizmos()
@@ -43,12 +54,18 @@ public class TestExample : MonoBehaviour
 
 			Gizmos.DrawSphere(mouseWorldPosition, 1);
 			Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
-
-			//Gizmos.color = Color.magenta;
-
-			//Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
-			//Gizmos.DrawRay(ray);
-			//Gizmos.DrawSphere(ray.origin, 1);
 		}
+	}
+
+	public void SwitchControllers()
+	{
+		_characterController.Disable();
+
+		_aIController = new CompositController(
+				new RandomAICharacterController(_character, 2, _pointer, _queryFilter, _layerMask),
+				new PlayerRotatableController(_character, _character));
+
+		_aIController.Enable();
+		_currentController = _aIController;
 	}
 }

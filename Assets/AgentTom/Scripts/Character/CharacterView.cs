@@ -1,12 +1,16 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterView : MonoBehaviour
 {
 	private readonly int VelocityKey = Animator.StringToHash("Velocity");
 	private readonly int DeadKey = Animator.StringToHash("Dead");
+	private readonly int DamagedKey = Animator.StringToHash("Damaged");
 
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Character _character;
+	[SerializeField] private ParticleSystem _damageEffectPrefab;
+	[SerializeField] private Image _filledImage;
 
 	private const float _minWeight = 0f;
 	private const float _maxWeight = 1f;
@@ -18,7 +22,7 @@ public class CharacterView : MonoBehaviour
 	private void Awake()
 	{
 		_maxHealth = _character.HealthValue;
-		Debug.Log(HealthPersent);
+		ShowHealthPoints();
 	}
 
 	private void Update()
@@ -56,5 +60,16 @@ public class CharacterView : MonoBehaviour
 			_animator.SetLayerWeight(1, _minWeight);
 		else
 			_animator.SetLayerWeight(1, _maxWeight);
+	}
+
+	public void ShowDamageEffects()
+	{
+		_damageEffectPrefab.Play();
+		_animator.SetTrigger(DamagedKey);
+	}
+
+	public void ShowHealthPoints()
+	{
+		_filledImage.fillAmount = (float)_character.HealthValue / _maxHealth;
 	}
 }
