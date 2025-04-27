@@ -25,7 +25,6 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 
 	private void Awake()
 	{
-		//_mover = new DirectionalMover(GetComponent<CharacterController>(), _moveSpeed);
 		_mover = new MouseMover(GetComponent<NavMeshAgent>(), _moveSpeed);
 		_rotator = new DirectionalRotator(transform, _rotationSpeed);
 		_health = new Health(_maxHealth);
@@ -68,4 +67,6 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 
 		_rotator.SetInputDirection(inputDirection);
 	}
+
+	public void ShowControllerType(string message) => _characterView.ShowControllerType(message);
 }

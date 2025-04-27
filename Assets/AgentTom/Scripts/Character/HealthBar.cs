@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    [SerializeField] private GameObject _owner;
+    [SerializeField] private Character _owner;
 
 	private float _yPosition;
 

@@ -7,6 +7,9 @@ public class TestExample : MonoBehaviour
 	[SerializeField] private Pointer _pointerPrefab;
 	[SerializeField] private LayerMask _layerMask;
 
+	private const string MouseControllerType = "с помощью мышки";
+	private const string AIControllerType = "автоматическое";
+
 	private Controller _characterController;
 	private Controller _aIController;
 
@@ -36,6 +39,8 @@ public class TestExample : MonoBehaviour
 
 		_characterController.Enable();
 		_currentController = _characterController;
+
+		_character.ShowControllerType(MouseControllerType);
 	}
 
 	private void Update()
@@ -70,5 +75,7 @@ public class TestExample : MonoBehaviour
 
 		_aIController.Enable();
 		_currentController = _aIController;
+
+		_character.ShowControllerType(AIControllerType);
 	}
 }

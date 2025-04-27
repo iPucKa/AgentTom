@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class CharacterView : MonoBehaviour
 	[SerializeField] private Character _character;
 	[SerializeField] private ParticleSystem _damageEffectPrefab;
 	[SerializeField] private Image _filledImage;
+	[SerializeField] private TMP_Text _controllerText;
 
 	private const float _minWeight = 0f;
 	private const float _maxWeight = 1f;
@@ -72,4 +74,6 @@ public class CharacterView : MonoBehaviour
 	{
 		_filledImage.fillAmount = (float)_character.HealthValue / _maxHealth;
 	}
+
+	public void ShowControllerType(string message) => _controllerText.text = "”правление: " +message;
 }
