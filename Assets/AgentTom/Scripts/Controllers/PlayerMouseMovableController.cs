@@ -15,13 +15,15 @@ public class PlayerMouseMovableController : Controller
 
 	private Vector3 _targetPosition;
 	private Vector3 _position;
+	private LayerMask _layerMask;
 
-	public PlayerMouseMovableController(IMovable movable, NavMeshQueryFilter queryFilter, Camera camera, Pointer pointer)
+	public PlayerMouseMovableController(IMovable movable, NavMeshQueryFilter queryFilter, Camera camera, Pointer pointer, LayerMask layerMask)
 	{
 		_movable = movable;
 		_queryFilter = queryFilter;
 		_camera = camera;
 		_pointer = pointer;
+		_layerMask = layerMask;
 		//_targetPosition = movable.Position;
 	}
 
@@ -34,7 +36,7 @@ public class PlayerMouseMovableController : Controller
 		{
 			Ray ray = _camera.ScreenPointToRay(_position);
 
-			if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+			if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _layerMask.value))
 			{
 				_targetPosition = hit.point;
 			}
@@ -45,30 +47,14 @@ public class PlayerMouseMovableController : Controller
 
 			if (TryGetPath(_targetPosition, _path))
 			{
-				SetPointerToPosition();
+				_pointer.SetPointerToPosition(_targetPosition);
 
 				_movable.SetMovePosition(_targetPosition); 
 			}
 		}
-		
-		UpdatePointerVisibility();
+
+		_pointer.UpdatePointerVisibility(_movable.Position);
 	}
 
-	public bool TryGetPath(Vector3 targetPosition, NavMeshPath pathToTarget) => NavMeshUtils.TryGetPath(_movable.Position, _targetPosition, _queryFilter, pathToTarget);
-
-	private void SetPointerToPosition()
-	{
-		_pointer.gameObject.SetActive(true);
-		_pointer.transform.position = _targetPosition;
-	}
-
-	private void UpdatePointerVisibility()
-	{
-		float distance = (_pointer.gameObject.transform.position - _movable.Position).magnitude;
-		
-		if (distance <= 0.1f)
-		{
-			_pointer.gameObject.SetActive(false);
-		}
-	}
+	public bool TryGetPath(Vector3 targetPosition, NavMeshPath pathToTarget) => NavMeshUtils.TryGetPath(_movable.Position, _targetPosition, _queryFilter, pathToTarget);	
 }

@@ -5,6 +5,7 @@ public class TestExample : MonoBehaviour
 {
 	[SerializeField] private Character _character;
 	[SerializeField] private Pointer _pointerPrefab;
+	[SerializeField] private LayerMask _layerMask;
 
 	private Controller _characterController;
 
@@ -21,7 +22,7 @@ public class TestExample : MonoBehaviour
 		Pointer pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
 
 		_characterController = new CompositController(
-			new PlayerMouseMovableController(_character, queryFilter, _camera, pointer),
+			new PlayerMouseMovableController(_character, queryFilter, _camera, pointer, _layerMask),
 			new PlayerRotatableController(_character, _character));
 
 		_characterController.Enable();
@@ -34,20 +35,20 @@ public class TestExample : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		//if (Application.isPlaying)
-		//{
-		//	Gizmos.color = Color.red;
+		if (Application.isPlaying)
+		{
+			Gizmos.color = Color.red;
 
-		//	Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+			Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
-		//	Gizmos.DrawSphere(mouseWorldPosition, 1);
-		//	Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
+			Gizmos.DrawSphere(mouseWorldPosition, 1);
+			Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
 
 			//Gizmos.color = Color.magenta;
 
 			//Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			//Gizmos.DrawRay(ray);
 			//Gizmos.DrawSphere(ray.origin, 1);
-		//}
+		}
 	}
 }
