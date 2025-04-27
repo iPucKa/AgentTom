@@ -9,34 +9,31 @@ public class CharacterView : MonoBehaviour
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Character _character;
 
+	private const float _minWeight = 0f;
 	private const float _maxWeight = 1f;
+	
 	private bool _isRunning;
 	private int _maxHealth;
 
+	private float HealthPersent => _character.HealthValue * 100 / _maxHealth;	
+	
 	private void Awake()
 	{
 		_maxHealth = _character.HealthValue;
+		Debug.Log(HealthPersent);
 	}
 
 	private void Update()
 	{
-		if (_character.HealthValue == _maxHealth)
-			SetInjuredBehaviour(0);
-		else
-			SetInjuredBehaviour(_maxWeight);
+		if (_character.IsDead)
+			DeadProcess();
 
-		if (_character.CurrentVelocity.magnitude > 0.05f)
-			StartWalking();
-		else
-			StopWalking();
+		SetInjuredBehaviour();
+
+		WalkingProcess();
 
 		if (Input.GetKey(KeyCode.LeftShift))
-			RunningProcess();
-		else if (_isRunning)
-			StopRunning();		
-
-		if (_character.HealthValue <= 0)
-			DeadProcess();
+			RunningProcess();	
 	}
 
 	private void DeadProcess()
@@ -44,14 +41,27 @@ public class CharacterView : MonoBehaviour
 		_animator.SetTrigger(DeadKey);
 	}
 
-	private void StopWalking()
+	private void WalkingProcess()
 	{
-		_animator.SetFloat(VelocityKey, 0.01f);
-	}
+		if (_character.IsDead)
+			return;
 
-	private void StartWalking()
+		if (_character.CurrentVelocity.magnitude > 0.05f)
+			_animator.SetFloat(VelocityKey, 1f);
+		else
+			_animator.SetFloat(VelocityKey, 0.01f);
+	}
+	
+	private void RunningProcess()
 	{
-		_animator.SetFloat(VelocityKey, 1f);
+		if (_character.IsDead)
+			return;
+
+		if (_isRunning == true)
+			StopRunning();
+
+		_isRunning = true;
+		_animator.SetBool(IsRunningKey, true);
 	}
 
 	private void StopRunning()
@@ -60,17 +70,14 @@ public class CharacterView : MonoBehaviour
 		_animator.SetBool(IsRunningKey, false);
 	}
 
-	private void RunningProcess()
+	private void SetInjuredBehaviour()
 	{
-		if(_isRunning == true)
+		if(_character.IsDead)
 			return;
 
-		_isRunning = true;
-		_animator.SetBool(IsRunningKey, true);
-	}
-
-	private void SetInjuredBehaviour(float weight)
-	{
-		_animator.SetLayerWeight(1, weight);
+		if (HealthPersent > 30)
+			_animator.SetLayerWeight(1, _minWeight);
+		else
+			_animator.SetLayerWeight(1, _maxWeight);
 	}
 }

@@ -34,20 +34,20 @@ public class TestExample : MonoBehaviour
 
 	private void OnDrawGizmos()
 	{
-		if (Application.isPlaying)
-		{
-			Gizmos.color = Color.red;
+		//if (Application.isPlaying)
+		//{
+		//	Gizmos.color = Color.red;
 
-			Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
+		//	Vector3 mouseWorldPosition = _camera.ScreenToWorldPoint(Input.mousePosition);
 
-			Gizmos.DrawSphere(mouseWorldPosition, 1);
-			Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
+		//	Gizmos.DrawSphere(mouseWorldPosition, 1);
+		//	Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
 
 			//Gizmos.color = Color.magenta;
 
 			//Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
 			//Gizmos.DrawRay(ray);
 			//Gizmos.DrawSphere(ray.origin, 1);
-		}
+		//}
 	}
 }

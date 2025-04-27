@@ -46,4 +46,14 @@ public class Mine : MonoBehaviour
 
 		Destroy(gameObject);
 	}
+
+	private void OnDrawGizmos()
+	{
+		if (Application.isPlaying)
+		{
+			Gizmos.color = Color.red;
+
+			Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+		}
+	}
 }
