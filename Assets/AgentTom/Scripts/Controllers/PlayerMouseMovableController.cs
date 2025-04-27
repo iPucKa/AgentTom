@@ -12,16 +12,13 @@ public class PlayerMouseMovableController : Controller
 	private NavMeshPath _path = new NavMeshPath();
 
 	private Pointer _pointer;
+	private Timer _timer;
 
 	private Vector3 _targetPosition;
 	private Vector3 _position;
 	private LayerMask _layerMask;
 
-	private float _currentTime;
-
-	public override float IdleTime => _currentTime;
-
-	public PlayerMouseMovableController(IMovable movable, Camera camera, Pointer pointer, NavMeshQueryFilter queryFilter, LayerMask layerMask)
+	public PlayerMouseMovableController(IMovable movable, Camera camera, Pointer pointer, NavMeshQueryFilter queryFilter, LayerMask layerMask, Timer timer)
 	{
 		_movable = movable;
 		_camera = camera;
@@ -29,18 +26,18 @@ public class PlayerMouseMovableController : Controller
 		_queryFilter = queryFilter;
 		_layerMask = layerMask;
 
-		_currentTime = 0;
+		_timer = timer;
 	}
 
 	protected override void UpdateLogic(float deltaTime)
 	{
-		_currentTime += Time.deltaTime;
+		_timer.AddTime(deltaTime);
 		
 		_position = Input.mousePosition;
 
 		if (Input.GetMouseButtonDown(LeftMouseButtonKey))
 		{
-			_currentTime = 0;
+			_timer.ResetTime();
 
 			Ray ray = _camera.ScreenPointToRay(_position);
 

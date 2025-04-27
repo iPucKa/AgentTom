@@ -9,7 +9,7 @@ public class RandomAICharacterController : Controller
 	private NavMeshQueryFilter _queryFilter;
 	private NavMeshPath _path = new NavMeshPath();
 
-	private float _currentTime;
+	private float _time;
 	private float _timeToChangeDirection;
 
 	private Vector3 _targetPosition;
@@ -17,8 +17,6 @@ public class RandomAICharacterController : Controller
 	private LayerMask _layerMask;
 
 	private const float RadiusRange = 4f;
-
-	public override float IdleTime => _currentTime;
 
 	public RandomAICharacterController(IMovable movable, float timeToChangeDirection, Pointer pointer, NavMeshQueryFilter queryFilter, LayerMask layerMask)
 	{
@@ -30,16 +28,14 @@ public class RandomAICharacterController : Controller
 
 		_targetPosition = _movable.Position;
 
-		_currentTime = 0;
+		_time = 0;
 	}
 
 	protected override void UpdateLogic(float deltaTime)
 	{
-		Debug.Log("¬ключили другой контроллер");
+		_time += Time.deltaTime;		
 
-		_currentTime += Time.deltaTime;		
-
-		if (_currentTime >= _timeToChangeDirection)
+		if (_time >= _timeToChangeDirection)
 		{
 			_position = GetRandomPosition(_movable.Position);
 
@@ -50,7 +46,7 @@ public class RandomAICharacterController : Controller
 
 			if (TryGetPath(_targetPosition, _path))
 			{
-				_currentTime = 0;
+				_time = 0;
 
 				_pointer.SetPointerToPosition(_targetPosition);
 

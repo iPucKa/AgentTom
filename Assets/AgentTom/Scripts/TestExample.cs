@@ -14,6 +14,8 @@ public class TestExample : MonoBehaviour
 	private Pointer _pointer;
 
 	private Camera _camera;
+	private Timer _timer;
+
 	private NavMeshQueryFilter _queryFilter = new NavMeshQueryFilter();
 
 	private const float _timeToChangeBehavoiur = 10f;
@@ -21,6 +23,7 @@ public class TestExample : MonoBehaviour
 	private void Awake()
 	{
 		_camera = Camera.main;
+		_timer = new Timer();
 
 		_queryFilter.agentTypeID = 0;
 		_queryFilter.areaMask = NavMesh.AllAreas;
@@ -28,7 +31,7 @@ public class TestExample : MonoBehaviour
 		_pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
 
 		_characterController = new CompositController(
-			new PlayerMouseMovableController(_character, _camera, _pointer, _queryFilter, _layerMask),
+			new PlayerMouseMovableController(_character, _camera, _pointer, _queryFilter, _layerMask, _timer),
 			new PlayerRotatableController(_character, _character));
 
 		_characterController.Enable();
@@ -40,7 +43,7 @@ public class TestExample : MonoBehaviour
 		_currentController.Update(Time.deltaTime);
 
 		if (_characterController.IsWorking)
-			if (_characterController.IdleTime >= _timeToChangeBehavoiur)
+			if (_timer.CurrentTime >= _timeToChangeBehavoiur)
 				SwitchControllers();
 	}
 
