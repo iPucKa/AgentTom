@@ -75,5 +75,5 @@ public class CharacterView : MonoBehaviour
 		_filledImage.fillAmount = (float)_character.HealthValue / _maxHealth;
 	}
 
-	public void ShowControllerType(string message) => _controllerText.text = "”правление: " +message;
+	//public void ShowControllerType(string message) => _controllerText.text = "”правление: " +message;
 }

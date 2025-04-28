@@ -34,6 +34,6 @@ public class MineView : MonoBehaviour
 	{
 		_activeMine.SetActive(false);
 
-		Destroy(gameObject, 2);
+		Destroy(gameObject);
 	}
 }

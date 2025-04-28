@@ -22,15 +22,13 @@ public class Mine : MonoBehaviour
 		if (IsActivated)
 			_time += Time.deltaTime;
 
-		if (_time >= _timeUntilExplosion && _isDetonated == false)
-		{
-			Explode();
+		if (_isDetonated == false)
+			if (_time >= _timeUntilExplosion)
+			{
+				Explode();
 
-			_isDetonated = true;
-		}
-
-		//if(IsActivated && IsDetonated)
-			//Destroy(gameObject);
+				_isDetonated = true;
+			}
 	}
 
 	private void OnTriggerEnter(Collider other)

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,13 +8,10 @@ public class TestExample : MonoBehaviour
 	[SerializeField] private Pointer _pointerPrefab;
 	[SerializeField] private LayerMask _layerMask;
 
-	private const string MouseControllerType = "с помощью мышки";
-	private const string AIControllerType = "автоматическое";
+	[SerializeField] private TMP_Text _timerTtext;
 
 	private Controller _characterController;
-	private Controller _aIController;
 
-	private Controller _currentController;
 	private Pointer _pointer;
 
 	private Camera _camera;
@@ -26,7 +24,7 @@ public class TestExample : MonoBehaviour
 	private void Awake()
 	{
 		_camera = Camera.main;
-		_timer = new Timer();
+		_timer = new Timer(_timerTtext);
 
 		_queryFilter.agentTypeID = 0;
 		_queryFilter.areaMask = NavMesh.AllAreas;
@@ -34,26 +32,20 @@ public class TestExample : MonoBehaviour
 		_pointer = Instantiate(_pointerPrefab, _character.Position, Quaternion.identity);
 
 		_characterController = new CompositController(
-			new PlayerMouseMovableController(_character, _camera, _pointer, _queryFilter, _layerMask, _timer),
+			new TwoBehaviourCompositController(_character, _timer, _timeToChangeBehavoiur, 
+				new PlayerMouseMovableController(_character, _camera, _pointer, _queryFilter, _layerMask, _timer),
+				new RandomAICharacterController(_character, 2, _pointer, _queryFilter, _layerMask)),
 			new PlayerRotatableController(_character, _character));
 
 		_characterController.Enable();
-		_currentController = _characterController;
-
-		_character.ShowControllerType(MouseControllerType);
 	}
 
 	private void Update()
 	{
-		_currentController.Update(Time.deltaTime);
+		_characterController.Update(Time.deltaTime);
 
 		if (_character.IsDead)
-			_currentController.Disable();
-
-		if (_character.IsDead == false)
-			if (_characterController.IsWorking)
-				if (_timer.CurrentTime >= _timeToChangeBehavoiur)
-					SwitchControllers();
+			_characterController.Disable();
 	}
 
 	private void OnDrawGizmos()
@@ -67,19 +59,5 @@ public class TestExample : MonoBehaviour
 			Gizmos.DrawSphere(mouseWorldPosition, 1);
 			Gizmos.DrawRay(mouseWorldPosition, _camera.transform.forward * 100);
 		}
-	}
-
-	public void SwitchControllers()
-	{
-		_characterController.Disable();
-
-		_aIController = new CompositController(
-				new RandomAICharacterController(_character, 2, _pointer, _queryFilter, _layerMask),
-				new PlayerRotatableController(_character, _character));
-
-		_aIController.Enable();
-		_currentController = _aIController;
-
-		_character.ShowControllerType(AIControllerType);
 	}
 }

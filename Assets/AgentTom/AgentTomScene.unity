@@ -4758,6 +4758,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
+  _timerTtext: {fileID: 2081727656}
 --- !u!1 &1332713473
 GameObject:
   m_ObjectHideFlags: 0
@@ -7018,11 +7019,11 @@ RectTransform:
   - {fileID: 2081727655}
   m_Father: {fileID: 1149595819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 320, y: -30}
-  m_SizeDelta: {x: 620, y: 45}
-  m_Pivot: {x: 0, y: 1}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -50, y: -50}
+  m_SizeDelta: {x: 500, y: 45}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &2059241551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7179,7 +7180,7 @@ GameObject:
   - component: {fileID: 2081727657}
   - component: {fileID: 2081727656}
   m_Layer: 5
-  m_Name: ControllerText
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7224,7 +7225,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435:"
+  m_text: "\u0412\u0440\u0435\u043C\u044F \u0431\u0435\u0437\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F:
+    \u0441"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

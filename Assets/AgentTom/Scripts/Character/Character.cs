@@ -67,5 +67,5 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 		_rotator.SetInputDirection(inputDirection);
 	}
 
-	public void ShowControllerType(string message) => _characterView.ShowControllerType(message);
+	//public void ShowControllerType(string message) => _characterView.ShowControllerType(message);
 }
