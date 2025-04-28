@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MouseMover
+public class AgentDirectionalMover
 {
 	private NavMeshAgent _agent;
 
 	private Vector3 _targetPosition;
 
-	public MouseMover(NavMeshAgent agent, float movementSpeed)
+	public AgentDirectionalMover(NavMeshAgent agent, float movementSpeed)
 	{
 		_agent = agent;
 

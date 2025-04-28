@@ -2,52 +2,50 @@ using UnityEngine;
 
 public class Mine : MonoBehaviour
 {
-	[SerializeField] private GameObject _nonActiveMine;
-	[SerializeField] private GameObject _activeMine;
-
 	[SerializeField] private float _explosionRadius;
 	[SerializeField] private float _timeUntilExplosion;
 	[SerializeField] private int _damage;
-	[SerializeField] private ParticleSystem _mineExplosionEffect;
 
 	private bool _isDetonated;
+	private bool _isActivated;
 	private float _time;
+
+	public bool IsActivated => _isActivated;
+
+	public bool IsDetonated => _isDetonated;
 
 	private void Update()
 	{
-		if (_isDetonated == false)
+		if (IsActivated == false)
 			_time = 0;
 
-		if (_isDetonated)
+		if (IsActivated)
 			_time += Time.deltaTime;
 
-		if (_time >= _timeUntilExplosion)		
-			Explode();		
+		if (_time >= _timeUntilExplosion && _isDetonated == false)
+		{
+			Explode();
+
+			_isDetonated = true;
+		}
+
+		//if(IsActivated && IsDetonated)
+			//Destroy(gameObject);
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.TryGetComponent(out IDamageable damageable))
-		{
-			_isDetonated = true;
-			_activeMine.SetActive(true);
-			_nonActiveMine.SetActive(false);
-		}
+			_isActivated = true;
 	}
 
 	private void Explode()
 	{
-		_isDetonated = false;
-
-		ParticleSystem explosionEffect = Instantiate(_mineExplosionEffect, transform.position, Quaternion.identity);
-
 		Collider[] detectedColliders = Physics.OverlapSphere(transform.position, _explosionRadius);
 
 		foreach (Collider collider in detectedColliders)
 			if (collider.TryGetComponent(out IDamageable damageable))
 				damageable.TakeDamage(_damage);
-
-		Destroy(gameObject);
 	}
 
 	private void OnDrawGizmos()

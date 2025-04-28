@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHealable
 {
-	private MouseMover _mover;
+	private AgentDirectionalMover _mover;
 	private DirectionalRotator _rotator;
 	private Health _health;
 
@@ -24,7 +24,7 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 
 	private void Awake()
 	{
-		_mover = new MouseMover(GetComponent<NavMeshAgent>(), _moveSpeed);
+		_mover = new AgentDirectionalMover(GetComponent<NavMeshAgent>(), _moveSpeed);
 		_rotator = new DirectionalRotator(transform, _rotationSpeed);
 		_health = new Health(_maxHealth);
 	}

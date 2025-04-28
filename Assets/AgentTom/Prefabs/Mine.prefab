@@ -9,8 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2314688347078534113}
-  - component: {fileID: 7626056723702461984}
   - component: {fileID: 7707324690290544987}
+  - component: {fileID: 7626056723702461984}
+  - component: {fileID: 2555373489237738740}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -35,25 +36,6 @@ Transform:
   - {fileID: 41219817144229224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7626056723702461984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7941636909978145622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0bd9eb201ec09d3438fa18e2b2761808, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _nonActiveMine: {fileID: 5723921364982081603}
-  _activeMine: {fileID: 853891278908606418}
-  _explosionRadius: 6
-  _timeUntilExplosion: 3
-  _damage: 30
-  _mineExplosionEffect: {fileID: 5675929623433671820, guid: cc1a3e16ef9eafe4d91d9ea390066b38,
-    type: 3}
 --- !u!135 &7707324690290544987
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -75,6 +57,38 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3
   m_Center: {x: 0, y: 0.2, z: 0}
+--- !u!114 &7626056723702461984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7941636909978145622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd9eb201ec09d3438fa18e2b2761808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _explosionRadius: 6
+  _timeUntilExplosion: 3
+  _damage: 30
+--- !u!114 &2555373489237738740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7941636909978145622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2ce1b40983dbb84e9dc635cef52d78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mine: {fileID: 7626056723702461984}
+  _nonActiveMine: {fileID: 5723921364982081603}
+  _activeMine: {fileID: 853891278908606418}
+  _mineExplosionEffectPrefab: {fileID: 5675929623433671820, guid: cc1a3e16ef9eafe4d91d9ea390066b38,
+    type: 3}
 --- !u!1001 &511378777594133123
 PrefabInstance:
   m_ObjectHideFlags: 0

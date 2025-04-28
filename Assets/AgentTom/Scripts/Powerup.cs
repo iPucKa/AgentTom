@@ -4,12 +4,12 @@ public class Powerup : MonoBehaviour
 {
 
 	[SerializeField] private float _rotateSpeed;
-	[SerializeField] protected ParticleSystem _powerupEffectPrefab;
+	[SerializeField] private ParticleSystem _powerupEffectPrefab;
 
 	private const int BigHealth = 1000;
 
 	private Vector3 _defaultPosition;
-	protected float _time;
+	private float _time;
 
 	private void Awake()
 	{

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HealthBar : MonoBehaviour
+public class PositionFollower : MonoBehaviour
 {
     [SerializeField] private Character _owner;
 
