@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ public class CharacterView : MonoBehaviour
 	private readonly int VelocityKey = Animator.StringToHash("Velocity");
 	private readonly int DeadKey = Animator.StringToHash("Dead");
 	private readonly int DamagedKey = Animator.StringToHash("Damaged");
+	
+	private const string EdgeKey = "_Edge";
+	private const float TimeToDissolve = 5f;
 
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Character _character;
@@ -14,9 +18,14 @@ public class CharacterView : MonoBehaviour
 	[SerializeField] private Image _filledImage;
 	[SerializeField] private TMP_Text _controllerText;
 
+	[SerializeField] private Transform _body;
+	[SerializeField] private Transform _hpBar;
+
 	private const float _minWeight = 0f;
 	private const float _maxWeight = 1f;
 	
+	private	SkinnedMeshRenderer _renderer;
+	private Coroutine _process;
 	private int _maxHealth;
 
 	private float HealthPersent => _character.HealthValue * 100 / _maxHealth;	
@@ -25,6 +34,8 @@ public class CharacterView : MonoBehaviour
 	{
 		_maxHealth = _character.HealthValue;
 		ShowHealthPoints();
+
+		_renderer = _body.GetComponent<SkinnedMeshRenderer>();
 	}
 
 	private void Update()
@@ -41,6 +52,32 @@ public class CharacterView : MonoBehaviour
 	{
 		_animator.SetTrigger(DeadKey);
 	}
+
+	public void Dissolve()
+	{
+		_hpBar.gameObject.SetActive(false);
+
+		if (_process != null)
+			StopCoroutine(_process);
+
+		_process = StartCoroutine(DissolveProcess());
+	}
+
+	private IEnumerator DissolveProcess()
+	{
+		float time = 0;
+
+		while (time <= TimeToDissolve)
+		{
+			SetFloatFor(_renderer, EdgeKey, time / TimeToDissolve);
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+
+		_process = null;
+	}
+
 
 	private void WalkingProcess()
 	{
@@ -75,5 +112,8 @@ public class CharacterView : MonoBehaviour
 		_filledImage.fillAmount = (float)_character.HealthValue / _maxHealth;
 	}
 
-	//public void ShowControllerType(string message) => _controllerText.text = "”правление: " +message;
+	private void SetFloatFor(SkinnedMeshRenderer renderer, string key, float param)
+	{			
+		renderer.material.SetFloat(key, param);		
+	}
 }
