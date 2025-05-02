@@ -8,6 +8,7 @@ public class CharacterView : MonoBehaviour
 	private readonly int VelocityKey = Animator.StringToHash("Velocity");
 	private readonly int DeadKey = Animator.StringToHash("Dead");
 	private readonly int DamagedKey = Animator.StringToHash("Damaged");
+	private readonly int InJumpProcessKey = Animator.StringToHash("InJumpProcess");
 	
 	private const string EdgeKey = "_Edge";
 	private const float TimeToDissolve = 5f;
@@ -42,6 +43,8 @@ public class CharacterView : MonoBehaviour
 	{
 		if (_character.IsDead)
 			DeadProcess();
+
+		_animator.SetBool(InJumpProcessKey, _character.InJumpProcess);
 
 		SetInjuredBehaviour();
 
