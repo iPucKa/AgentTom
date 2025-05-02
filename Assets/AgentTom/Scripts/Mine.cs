@@ -3,27 +3,32 @@ using UnityEngine;
 public class Mine : MonoBehaviour
 {
 	[SerializeField] private float _explosionRadius;
-	[SerializeField] private float _timeUntilExplosion;
+	[SerializeField] private float _timeToExplosion;
 	[SerializeField] private int _damage;
+
+	private DetonationTimer _timer;
 
 	private bool _isDetonated;
 	private bool _isActivated;
-	private float _time;
 
 	public bool IsActivated => _isActivated;
 
 	public bool IsDetonated => _isDetonated;
 
+	public float TimeToDetonate => _timer.TimeLimit;
+
+	private void Awake()
+	{
+		_timer = new DetonationTimer(this);
+	}
+
 	private void Update()
 	{
 		if (IsActivated == false)
-			_time = 0;
+			return;
 
-		if (IsActivated)
-			_time += Time.deltaTime;
-
-		if (_isDetonated == false)
-			if (_time >= _timeUntilExplosion)
+		if (_timer.InProcess(out float elapsedTime) == false)
+			if (_isDetonated == false)
 			{
 				Explode();
 
@@ -34,7 +39,10 @@ public class Mine : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.TryGetComponent(out IDamageable damageable))
+		{
 			_isActivated = true;
+			_timer.StartProcess(_timeToExplosion);
+		}
 	}
 
 	private void Explode()
@@ -55,4 +63,6 @@ public class Mine : MonoBehaviour
 			Gizmos.DrawWireSphere(transform.position, _explosionRadius);
 		}
 	}
+
+	public bool InActivationProcess(out float elapsedTime) => _timer.InProcess(out elapsedTime);
 }
