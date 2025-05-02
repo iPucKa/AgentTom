@@ -44,12 +44,20 @@ public class TwoBehaviourCompositController : Controller
 
 		if (_character.IsDead == false)
 			if (_playerControlledState.IsWorking)
-				if (_timer.CurrentTime >= _timeToChangeBehavoiur)
+			{
+				if (_timer.InProcess(out float elapsedTime) && elapsedTime >= _timeToChangeBehavoiur)
+				{
 					SwitchControllers();
+
+					_timer.ShowTime("Automation is ON");
+				}				
+			}
 	}
 
 	private void SwitchControllers()
 	{
+		_timer.StopProcess();
+
 		_playerControlledState.Disable();
 		_aIControlledState.Enable();
 

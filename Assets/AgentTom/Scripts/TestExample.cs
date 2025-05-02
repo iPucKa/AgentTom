@@ -8,23 +8,21 @@ public class TestExample : MonoBehaviour
 	[SerializeField] private Pointer _pointerPrefab;
 	[SerializeField] private LayerMask _layerMask;
 
-	[SerializeField] private TMP_Text _timerTtext;
+	[SerializeField] private TMP_Text _timerText;
+
+	private const float _timeToChangeBehavoiur = 10f;
 
 	private Controller _characterController;
-
 	private Pointer _pointer;
-
 	private Camera _camera;
 	private Timer _timer;
 
 	private NavMeshQueryFilter _queryFilter = new NavMeshQueryFilter();
 
-	private const float _timeToChangeBehavoiur = 10f;
-
 	private void Awake()
 	{
 		_camera = Camera.main;
-		_timer = new Timer(_timerTtext);
+		_timer = new Timer(this, _timeToChangeBehavoiur, _timerText);
 
 		_queryFilter.agentTypeID = 0;
 		_queryFilter.areaMask = NavMesh.AllAreas;

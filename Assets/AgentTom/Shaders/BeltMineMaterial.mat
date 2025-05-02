@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: DetonationMaterial
+  m_Name: BeltMineMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 7c8e103e28ac79141a3eca93319cf121,
     type: 3}
   m_Parent: {fileID: 0}
@@ -18,7 +18,8 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -38,13 +39,30 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AgroScale: 1
+    - _AlphaClip: 0
+    - _AlphaToMask: 0
+    - _Blend: 0
+    - _BlendModePreserveSpecular: 1
+    - _CastShadows: 1
+    - _Cull: 2
+    - _DefaultScale: 1
+    - _DstBlend: 0
+    - _Metallic: 0.7
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _SrcBlend: 1
+    - _Surface: 0
     - _TimeToDetonate: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
+    - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
-    - _DefaultColor: {r: 0, g: 0.67058825, b: 1, a: 1}
-    - _EndColor: {r: 1, g: 0, b: 0, a: 1}
-    - _StartColor: {r: 0.9924107, g: 1, b: 0, a: 1}
+    - _DefaultColor: {r: 0.7836912, g: 0.7853491, b: 0.78616345, a: 1}
+    - _EndColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    - _StartColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7989341126109059165
 MonoBehaviour:

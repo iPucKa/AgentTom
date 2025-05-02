@@ -16,7 +16,7 @@ public class RandomAICharacterController : Controller
 	private Vector3 _position;
 	private LayerMask _layerMask;
 
-	private const float RadiusRange = 4f;
+	private const float RadiusRange = 10f;
 
 	public RandomAICharacterController(IMovable movable, float timeToChangeDirection, Pointer pointer, NavMeshQueryFilter queryFilter, LayerMask layerMask)
 	{

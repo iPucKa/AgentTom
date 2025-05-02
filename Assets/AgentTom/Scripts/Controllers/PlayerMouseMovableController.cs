@@ -31,13 +31,16 @@ public class PlayerMouseMovableController : Controller
 
 	protected override void UpdateLogic(float deltaTime)
 	{
-		_timer.AddTime(deltaTime);
-		
+		if(_timer.InProcess(out float elapsedTime) == false) 
+			_timer.StartProcess();
+
+		_timer.ShowTime("Время бездействия: ", elapsedTime);
+
 		_position = Input.mousePosition;
 
 		if (Input.GetMouseButtonDown(LeftMouseButtonKey))
 		{
-			_timer.ResetTime();
+			_timer.StopProcess();
 
 			Ray ray = _camera.ScreenPointToRay(_position);
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Mine : MonoBehaviour
 {
@@ -6,7 +7,9 @@ public class Mine : MonoBehaviour
 	[SerializeField] private float _timeToExplosion;
 	[SerializeField] private int _damage;
 
-	private DetonationTimer _timer;
+	[SerializeField] private TMP_Text _timerText;
+
+	private Timer _timer;
 
 	private bool _isDetonated;
 	private bool _isActivated;
@@ -19,7 +22,7 @@ public class Mine : MonoBehaviour
 
 	private void Awake()
 	{
-		_timer = new DetonationTimer(this);
+		_timer = new Timer(this, _timeToExplosion, _timerText);
 	}
 
 	private void Update()
@@ -27,12 +30,13 @@ public class Mine : MonoBehaviour
 		if (IsActivated == false)
 			return;
 
-		if (_timer.InProcess(out float elapsedTime) == false)
+		if (_timer.InProcess(out float elapsedTime) && elapsedTime >= TimeToDetonate)
 			if (_isDetonated == false)
 			{
 				Explode();
 
 				_isDetonated = true;
+				_timer.StopProcess();
 			}
 	}
 
@@ -40,8 +44,11 @@ public class Mine : MonoBehaviour
 	{
 		if (other.TryGetComponent(out IDamageable damageable))
 		{
-			_isActivated = true;
-			_timer.StartProcess(_timeToExplosion);
+			if(_timer.InProcess(out float elapsedTime) == false)
+			{
+				_isActivated = true;
+				_timer.StartProcess();
+			}			
 		}
 	}
 
@@ -65,4 +72,6 @@ public class Mine : MonoBehaviour
 	}
 
 	public bool InActivationProcess(out float elapsedTime) => _timer.InProcess(out elapsedTime);
+
+	public void ShowTime(string message, float elapsedTime) => _timer.ShowTime(message, elapsedTime);
 }

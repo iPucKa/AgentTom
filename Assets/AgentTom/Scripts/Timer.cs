@@ -1,29 +1,73 @@
-using TMPro;
+using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class Timer
 {
-    private float _time;
+	private float _timeLimit;
+	private float _elapsedTime;
 
 	private TMP_Text _timerText;
 
-	public float CurrentTime => _time;
+	private MonoBehaviour _coroutineRunner;
 
-	public Timer(TMP_Text timerText)
+	private Coroutine _process;
+
+	public Timer(MonoBehaviour coroutineRunner, float timeLimit, TMP_Text timerText)
 	{
-		_time = 0;
+		_coroutineRunner = coroutineRunner;
+		_timeLimit = timeLimit;
 		_timerText = timerText;
 	}
 
-	public void AddTime(float deltaTime) 
-	{ 
-		_time += Time.deltaTime;
-		_timerText.text = "Время бездействия: " + _time.ToString("0.0") + "c";
+	public float TimeLimit => _timeLimit;
+
+	public bool InProcess(out float elapsedTime)
+	{
+		if (_process == null)
+		{
+			elapsedTime = 0;
+			return false;
+		}
+
+		elapsedTime = _elapsedTime;
+		return true;
 	}
 
-	public void ResetTime()
+	public void StartProcess()
 	{
-		_time = 0;
-		_timerText.text = $"Время бездействия: {_time} с";
+		if (_process != null)
+			_coroutineRunner.StopCoroutine(_process);
+
+		_process = _coroutineRunner.StartCoroutine(Process());
 	}
+
+	public void StopProcess()
+	{
+		if (_process != null)
+			_coroutineRunner.StopCoroutine(_process);
+
+		_process = null;
+	}
+
+	private IEnumerator Process()
+	{
+		_elapsedTime = 0;
+
+		while (_elapsedTime < _timeLimit)
+		{
+			_elapsedTime += Time.deltaTime;
+
+			if (_elapsedTime > _timeLimit)
+				_elapsedTime = _timeLimit;
+
+			yield return null;
+		}
+
+		//_process = null;
+	}
+
+	public void ShowTime(string message) => _timerText.text = message;	
+
+	public void ShowTime(string message,float elapsedTime) => _timerText.text = message + elapsedTime.ToString("0");	
 }
