@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.TextCore.Text;
 
 public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHealable
 {
@@ -64,7 +63,7 @@ public class Character : MonoBehaviour, IMovable, IRotatable, IDamageable, IHeal
 
 		_health.Reduce(damage);
 
-		_characterView.ShowHealthPoints();
+		_characterView.ShowHealthPoints();		
 	}
 
 	public void AddHealth(int health)

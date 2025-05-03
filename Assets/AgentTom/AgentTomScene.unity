@@ -2353,7 +2353,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9a3587fc3e19d1b4885395f07d87f56a, type: 2}
+  - {fileID: 2100000, guid: 0ae215d7a5df4a843a5766528504c20e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5648,7 +5648,7 @@ MonoBehaviour:
   _rotationSpeed: 900
   _maxHealth: 100
   _characterView: {fileID: 2002815011}
-  _jumpSpeed: 3
+  _jumpSpeed: 4
   _jumpCurve:
     serializedVersion: 2
     m_Curve:
@@ -8671,7 +8671,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 66cbc5ef03e36e74c80556c3ce2b6fce, type: 2}
+      objectReference: {fileID: 2100000, guid: 28eff4d587a4eaf40894b40c55e12e4a, type: 2}
     - target: {fileID: -8679921383154817045, guid: b717baa0e8f5d5946a9e314d9d65bda7,
         type: 3}
       propertyPath: m_LocalPosition.x

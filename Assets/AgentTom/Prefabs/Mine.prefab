@@ -324,7 +324,7 @@ MonoBehaviour:
   _mine: {fileID: 7626056723702461984}
   _mineExplosionEffectPrefab: {fileID: 5675929623433671820, guid: cc1a3e16ef9eafe4d91d9ea390066b38,
     type: 3}
-  _explosionSound: {fileID: 8300000, guid: faecf0d08ca5f1544b791c7a2fc485b2, type: 3}
+  _explosionSound: {fileID: 8300000, guid: 7e26c9daf4c32483b9c2790e662d3f1b, type: 3}
   _explosionSoundPrefab: {fileID: 3162494207128403540, guid: f0461a4ac3f48ec4d8a9c4dff065a9a0,
     type: 3}
 --- !u!1001 &4876868390063150354

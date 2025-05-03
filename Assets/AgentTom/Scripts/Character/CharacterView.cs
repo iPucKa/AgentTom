@@ -11,7 +11,13 @@ public class CharacterView : MonoBehaviour
 	private readonly int InJumpProcessKey = Animator.StringToHash("InJumpProcess");
 	
 	private const string EdgeKey = "_Edge";
+	private const string YOffsetKey = "_YOffset";
+	private const string HitScaleKey = "_HitScale";
+
 	private const float TimeToDissolve = 5f;
+	private const float TimeToTakeHit = 0.25f;
+	private const float MaxYOffset = 2f;
+	private const float MaxAddedScale = 0.5f;
 
 	[SerializeField] private Animator _animator;
 	[SerializeField] private Character _character;
@@ -26,7 +32,9 @@ public class CharacterView : MonoBehaviour
 	private const float _maxWeight = 1f;
 	
 	private	SkinnedMeshRenderer _renderer;
-	private Coroutine _process;
+	private Coroutine _dissilveProcess;
+	private Coroutine _hitProcess;
+
 	private int _maxHealth;
 
 	private float HealthPersent => _character.HealthValue * 100 / _maxHealth;	
@@ -60,10 +68,10 @@ public class CharacterView : MonoBehaviour
 	{
 		_hpBar.gameObject.SetActive(false);
 
-		if (_process != null)
-			StopCoroutine(_process);
+		if (_dissilveProcess != null)
+			StopCoroutine(_dissilveProcess);
 
-		_process = StartCoroutine(DissolveProcess());
+		_dissilveProcess = StartCoroutine(DissolveProcess());
 	}
 
 	private IEnumerator DissolveProcess()
@@ -78,9 +86,33 @@ public class CharacterView : MonoBehaviour
 			yield return null;
 		}
 
-		_process = null;
+		_dissilveProcess = null;
 	}
 
+	private IEnumerator HitProcess()
+	{		
+		float time = 0;		
+
+		while (time <= TimeToTakeHit)
+		{
+			SetFloatFor(_renderer, YOffsetKey, time* MaxYOffset / TimeToTakeHit);
+			SetFloatFor(_renderer, HitScaleKey, 1f + (time / TimeToTakeHit)* MaxAddedScale);
+
+			time += Time.deltaTime;
+			yield return null;
+		}
+
+		while (time > 0)
+		{
+			SetFloatFor(_renderer, YOffsetKey, time * MaxYOffset / TimeToTakeHit);
+			SetFloatFor(_renderer, HitScaleKey, 1f + (time / TimeToTakeHit)* MaxAddedScale);
+
+			time -= Time.deltaTime;
+			yield return null;
+		}
+		
+		_hitProcess = null;
+	}
 
 	private void WalkingProcess()
 	{
@@ -108,6 +140,11 @@ public class CharacterView : MonoBehaviour
 	{
 		_damageEffectPrefab.Play();
 		_animator.SetTrigger(DamagedKey);
+
+		if (_hitProcess != null)
+			StopCoroutine(_hitProcess);
+
+		_dissilveProcess = StartCoroutine(HitProcess());
 	}
 
 	public void ShowHealthPoints()
